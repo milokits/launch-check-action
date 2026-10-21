@@ -1,0 +1,34 @@
+name: test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm test
+
+  self-test:
+    # Runs the published action the way users do, against our own site.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Launch Check on milokits.com
+        id: check
+        uses: milokits/launch-check-action@v1
+        with:
+          url: https://milokits.com
+          i-own-this: "true"
+          fail-on: fail
+      - name: Show outputs
+        if: always()
+        run: echo "Header score ${{ steps.check.outputs.header-score }} (grade ${{ steps.check.outputs.grade }}), ${{ steps.check.outputs.failed }} failed, ${{ steps.check.outputs.warnings }} warnings"
