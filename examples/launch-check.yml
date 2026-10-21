@@ -1,0 +1,28 @@
+# .github/workflows/launch-check.yml
+# Runs Milo's Launch Check against your own live site after each push to main and every Monday.
+name: Launch Check
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  launch-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Passive security check
+        id: check
+        uses: milokits/launch-check-action@v1
+        with:
+          url: https://your-app.example.com   # your own site
+          i-own-this: "true"                  # you confirm you own it or may test it
+          fail-on: fail                       # fail | warn | none
+
+      - name: Show the score
+        if: always()
+        run: echo "Header score ${{ steps.check.outputs.header-score }} (grade ${{ steps.check.outputs.grade }})"

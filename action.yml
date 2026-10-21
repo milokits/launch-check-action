@@ -1,0 +1,38 @@
+name: "Milo's Launch Check"
+description: "Passive security check for your own live site: headers, HTTPS, secrets in public JS, source maps, public .env and .git."
+author: "Milo Kits"
+branding:
+  icon: "shield"
+  color: "yellow"
+inputs:
+  url:
+    description: "The live URL of a site you own or are allowed to test, e.g. https://myapp.com"
+    required: true
+  i-own-this:
+    description: "Set to 'true' to confirm you own this site or are allowed to test it. Required."
+    required: true
+    default: "false"
+  fail-on:
+    description: "Fail the job when a result is at least this bad: 'fail' (default, real exposures only), 'warn' (also missing headers) or 'none'."
+    required: false
+    default: "fail"
+  timeout-ms:
+    description: "Per-request timeout in milliseconds."
+    required: false
+    default: "8000"
+outputs:
+  header-score:
+    description: "Security header score, e.g. 5/6"
+  grade:
+    description: "Header grade A to F"
+  passed:
+    description: "Number of passed checks"
+  warnings:
+    description: "Number of warnings"
+  failed:
+    description: "Number of failed checks"
+  report-path:
+    description: "Path to the full JSON report"
+runs:
+  using: "node24"
+  main: "src/action.js"

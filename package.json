@@ -1,0 +1,15 @@
+{
+  "name": "@milokits/launch-check",
+  "version": "1.0.0",
+  "description": "Passive security check for your own live site: security headers, HTTPS redirect, secrets in public JavaScript, exposed source maps, public .env and .git. Zero dependencies.",
+  "bin": { "launch-check": "bin/launch-check.js" },
+  "main": "src/scan.js",
+  "files": ["bin", "src", "README.md", "LICENSE"],
+  "scripts": { "test": "node --test test/" },
+  "engines": { "node": ">=18" },
+  "keywords": ["security", "headers", "csp", "hsts", "supabase", "lovable", "bolt", "vibe-coding", "github-action"],
+  "homepage": "https://milokits.com",
+  "repository": { "type": "git", "url": "https://github.com/milokits/launch-check-action.git" },
+  "author": "Milo Kits <hello@milokits.com>",
+  "license": "MIT"
+}
